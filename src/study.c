@@ -1,7 +1,10 @@
+// Study Module - Tracks subjects studied and hours spent
+
 #include <stdio.h>
 #include <time.h>
 #include "study.h"
 
+// Adds a study entry (subject + hours)
 void addStudy() {
     FILE *fp = fopen("study.txt", "a");
     if (!fp) {
@@ -18,6 +21,7 @@ void addStudy() {
     printf("Enter hours studied: ");
     scanf("%d", &hours);
 
+    // Get today's date
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
 
@@ -25,12 +29,14 @@ void addStudy() {
     int month = tm->tm_mon + 1;
     int year = tm->tm_year + 1900;
 
+    // Save entry
     fprintf(fp, "%s %d %d %d %d\n", subject, hours, day, month, year);
     fclose(fp);
 
     printf("Study session added successfully!\n");
 }
 
+// Displays complete study log
 void viewStudy() {
     FILE *fp = fopen("study.txt", "r");
     if (!fp) {
@@ -52,6 +58,7 @@ void viewStudy() {
     fclose(fp);
 }
 
+// Shows today's total study hours
 void studySummary() {
     FILE *fp = fopen("study.txt", "r");
     if (!fp) {
@@ -63,6 +70,7 @@ void studySummary() {
     int hours, day, month, year;
     int totalHours = 0;
 
+    // Get current date
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
 
@@ -70,9 +78,9 @@ void studySummary() {
     int cmonth = tm->tm_mon + 1;
     int cyear = tm->tm_year + 1900;
 
+    // Add today's hours
     while (fscanf(fp, "%s %d %d %d %d",
                   subject, &hours, &day, &month, &year) != EOF) {
-
         if (day == cday && month == cmonth && year == cyear) {
             totalHours += hours;
         }
@@ -84,6 +92,7 @@ void studySummary() {
     printf("Total Hours Studied: %d\n", totalHours);
 }
 
+// Study menu controller
 void studyMenu() {
     int ch;
 
