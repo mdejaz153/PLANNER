@@ -9,7 +9,7 @@ void addExpense() {
         printf("Error opening file!\n");
         return;
     }
-
+    
     char item[50];
     float amount;
     
