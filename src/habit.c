@@ -1,7 +1,10 @@
+// Habit Module - Handles habit creation, completion marking, and viewing
+
 #include <stdio.h>
 #include <string.h>
 #include "habit.h"
 
+// Adds a new habit
 void addHabit() {
     FILE *fp = fopen("habits.txt", "a");
     if (!fp) {
@@ -13,12 +16,14 @@ void addHabit() {
     printf("Enter habit name: ");
     scanf("%s", habit);
 
-    fprintf(fp, "%s 0\n", habit);   // 0 = not completed
+    // Store habit with default status (0 = pending)
+    fprintf(fp, "%s 0\n", habit);
     fclose(fp);
 
     printf("Habit added successfully!\n");
 }
 
+// Shows list of habits with status
 void viewHabits() {
     FILE *fp = fopen("habits.txt", "r");
     if (!fp) {
@@ -38,6 +43,7 @@ void viewHabits() {
     fclose(fp);
 }
 
+// Marks a habit as completed
 void markCompleted() {
     FILE *fp = fopen("habits.txt", "r");
     if (!fp) {
@@ -50,9 +56,9 @@ void markCompleted() {
     int count = 0;
 
     // Read all habits
-    while (fscanf(fp, "%s %d", habits[count], &completed[count]) != EOF) {
+    while (fscanf(fp, "%s %d", habits[count], &completed[count]) != EOF)
         count++;
-    }
+
     fclose(fp);
 
     if (count == 0) {
@@ -60,7 +66,6 @@ void markCompleted() {
         return;
     }
 
-    // Show habits
     printf("\n--- Select Habit to Mark Completed ---\n");
     for (int i = 0; i < count; i++) {
         printf("%d. %s (%s)\n", i + 1, habits[i], completed[i] ? "Completed" : "Pending");
@@ -75,9 +80,9 @@ void markCompleted() {
         return;
     }
 
-    completed[choice - 1] = 1; // mark completed
+    completed[choice - 1] = 1;
 
-    // Rewrite file
+    // Rewrite updated status
     fp = fopen("habits.txt", "w");
     for (int i = 0; i < count; i++) {
         fprintf(fp, "%s %d\n", habits[i], completed[i]);
@@ -87,6 +92,7 @@ void markCompleted() {
     printf("Habit marked as completed!\n");
 }
 
+// Habit menu controller
 void habitMenu() {
     int ch;
 
