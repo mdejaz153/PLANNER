@@ -1,3 +1,5 @@
+// Main controller file - Connects all modules of the PLANNER system
+
 #include <stdio.h>
 #include "expense.h"
 #include "habit.h"
@@ -5,6 +7,7 @@
 #include "study.h"
 #include "reminder.h"
 
+// Displays main menu and handles module selection
 int main() {
     int choice;
 
@@ -20,13 +23,33 @@ int main() {
         scanf("%d", &choice);
 
         switch(choice) {
-            case 1: expenseMenu(); break;
-            case 2: habitMenu(); break;
-            case 3: healthMenu(); break;
-            case 4: studyMenu(); break;
-            case 5: reminderMenu(); break;
-            case 6: printf("Exiting...\n"); break;
-            default: printf("Invalid choice! Try again.\n");
+
+            case 1:
+                expenseMenu(); 
+                break;
+
+            case 2:
+                habitMenu();
+                break;
+
+            case 3:
+                healthMenu();
+                break;
+
+            case 4:
+                studyMenu();
+                break;
+
+            case 5:
+                reminderMenu();
+                break;
+
+            case 6:
+                printf("Exiting...\n");
+                break;
+
+            default:
+                printf("Invalid choice! Try again.\n");
         }
 
     } while(choice != 6);
