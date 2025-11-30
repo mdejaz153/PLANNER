@@ -1,36 +1,41 @@
+// Expense Module - Handles adding, viewing, and summarizing expenses
+
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include "expense.h"
 
+// Adds a new expense entry to expenses.txt
 void addExpense() {
     FILE *fp = fopen("expenses.txt", "a");
     if (!fp) {
         printf("Error opening file!\n");
         return;
     }
-    
+
     char item[50];
     float amount;
-    
+
     printf("Enter expense name: ");
     scanf("%s", item);
     printf("Enter amount: ");
     scanf("%f", &amount);
 
-    // Get current month & year
+    // Get current month & year from system
     time_t t = time(NULL);
     struct tm *tm_info = localtime(&t);
 
     int month = tm_info->tm_mon + 1;
     int year = tm_info->tm_year + 1900;
 
+    // Store expense entry
     fprintf(fp, "%s %.2f %d %d\n", item, amount, month, year);
     fclose(fp);
 
     printf("Expense added successfully!\n");
 }
 
+// Displays all saved expenses
 void viewExpenses() {
     FILE *fp = fopen("expenses.txt", "r");
     if (!fp) {
@@ -51,6 +56,7 @@ void viewExpenses() {
     fclose(fp);
 }
 
+// Shows total expense for current month
 void monthlySummary() {
     FILE *fp = fopen("expenses.txt", "r");
     if (!fp) {
@@ -63,13 +69,14 @@ void monthlySummary() {
     float amount;
     int month, year;
 
-    // Get current month
+    // Get system month & year
     time_t t = time(NULL);
     struct tm *tm_info = localtime(&t);
 
     int currentMonth = tm_info->tm_mon + 1;
     int currentYear = tm_info->tm_year + 1900;
 
+    // Sum all expenses of current month
     while (fscanf(fp, "%s %f %d %d", item, &amount, &month, &year) != EOF) {
         if (month == currentMonth && year == currentYear) {
             total += amount;
@@ -82,6 +89,7 @@ void monthlySummary() {
     printf("Total expenses: ₹%.2f\n", total);
 }
 
+// Expense menu controller
 void expenseMenu() {
     int choice;
 
