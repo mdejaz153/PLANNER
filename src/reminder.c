@@ -1,7 +1,10 @@
+// Reminder Module - Stores reminder title, date, and time
+
 #include <stdio.h>
 #include <string.h>
 #include "reminder.h"
 
+// Adds a reminder
 void addReminder() {
     FILE *fp = fopen("reminders.txt", "a");
     if (!fp) {
@@ -22,12 +25,14 @@ void addReminder() {
     printf("Enter time (HH:MM): ");
     scanf("%s", time);
 
+    // Store reminder in file
     fprintf(fp, "%s | %s | %s\n", title, date, time);
     fclose(fp);
 
     printf("Reminder added successfully!\n");
 }
 
+// Displays all reminders
 void viewReminders() {
     FILE *fp = fopen("reminders.txt", "r");
     if (!fp) {
@@ -39,6 +44,7 @@ void viewReminders() {
 
     printf("\n--- Reminder List ---\n");
 
+    // Print each reminder line
     while (fgets(line, sizeof(line), fp)) {
         printf("%s", line);
     }
@@ -46,6 +52,7 @@ void viewReminders() {
     fclose(fp);
 }
 
+// Reminder menu controller
 void reminderMenu() {
     int ch;
 
