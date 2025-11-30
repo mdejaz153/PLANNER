@@ -12,7 +12,7 @@ void addExpense() {
 
     char item[50];
     float amount;
-
+    
     printf("Enter expense name: ");
     scanf("%s", item);
     printf("Enter amount: ");
