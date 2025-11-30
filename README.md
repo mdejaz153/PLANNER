@@ -21,8 +21,8 @@ The GitHub repository must contain:
 README.md → Project description
 Example:
 
-```YourRepo/
-├── src/
+YourRepo/
+```├── src/
 │ main.c
 │ expense.c
 │ habit.c
@@ -40,7 +40,8 @@ Example:
 ├── docs/
 │ ProjectReport.pdf
 │
-└── README.md```
+└── README.md
+```
 # Modules in the Project
 
 **1. Expense Tracker**
