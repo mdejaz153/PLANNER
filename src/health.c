@@ -13,7 +13,7 @@ void addHealth() {
 
     printf("Enter steps walked: ");
     scanf("%d", &steps);
-
+    
     printf("Enter calories consumed: ");
     scanf("%d", &calories);
 
