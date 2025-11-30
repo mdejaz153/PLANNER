@@ -1,7 +1,10 @@
+// Health Module - Logs daily steps and calorie intake, and provides summaries
+
 #include <stdio.h>
 #include <time.h>
 #include "health.h"
 
+// Adds a health entry (steps + calories)
 void addHealth() {
     FILE *fp = fopen("health.txt", "a");
     if (!fp) {
@@ -13,10 +16,11 @@ void addHealth() {
 
     printf("Enter steps walked: ");
     scanf("%d", &steps);
-    
+
     printf("Enter calories consumed: ");
     scanf("%d", &calories);
 
+    // Fetch current date using system time
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
 
@@ -24,12 +28,14 @@ void addHealth() {
     int month = tm->tm_mon + 1;
     int year = tm->tm_year + 1900;
 
+    // Write entry to file
     fprintf(fp, "%d %d %d %d %d\n", steps, calories, day, month, year);
     fclose(fp);
 
     printf("Health entry added successfully!\n");
 }
 
+// Displays full health log from file
 void viewHealth() {
     FILE *fp = fopen("health.txt", "r");
     if (!fp) {
@@ -41,6 +47,7 @@ void viewHealth() {
 
     printf("\n--- Health Log ---\n");
 
+    // Read and print each entry
     while (fscanf(fp, "%d %d %d %d %d", &steps, &calories, &day, &month, &year) != EOF) {
         printf("Steps: %d | Calories: %d | Date: %d-%d-%d\n",
                steps, calories, day, month, year);
@@ -49,6 +56,7 @@ void viewHealth() {
     fclose(fp);
 }
 
+// Shows today's steps + calories summary
 void dailySummary() {
     FILE *fp = fopen("health.txt", "r");
     if (!fp) {
@@ -59,6 +67,7 @@ void dailySummary() {
     int steps, calories, day, month, year;
     int totalSteps = 0, totalCalories = 0;
 
+    // Get current date from system
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
 
@@ -66,9 +75,8 @@ void dailySummary() {
     int cmonth = tm->tm_mon + 1;
     int cyear = tm->tm_year + 1900;
 
-    while (fscanf(fp, "%d %d %d %d %d",
-                  &steps, &calories, &day, &month, &year) != EOF) {
-
+    // Add all entries from today
+    while (fscanf(fp, "%d %d %d %d %d", &steps, &calories, &day, &month, &year) != EOF) {
         if (day == cday && month == cmonth && year == cyear) {
             totalSteps += steps;
             totalCalories += calories;
@@ -77,11 +85,13 @@ void dailySummary() {
 
     fclose(fp);
 
+    // Print summary
     printf("\n--- Today's Summary ---\n");
     printf("Total Steps: %d\n", totalSteps);
     printf("Total Calories: %d\n", totalCalories);
 }
 
+// Health menu controller
 void healthMenu() {
     int ch;
 
