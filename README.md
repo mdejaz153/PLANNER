@@ -1,3 +1,4 @@
+
 # PLANNER
 # Personal Life Management System
 A modular C project to manage Expenses, Habits, Health Records, Study Logs, and Reminders.
@@ -22,7 +23,8 @@ README.md → Project description
 Example:
 
 YourRepo/
-```├── src/
+```
+├── src/
 │ main.c
 │ expense.c
 │ habit.c
